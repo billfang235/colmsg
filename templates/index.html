@@ -1,0 +1,14 @@
+<!-- index.html -->
+<html>
+<head>
+    <title>Media Viewer</title>
+</head>
+<body>
+    <h1>Media Viewer</h1>
+    <p>Please choose a folder to see its contents:</p>
+    <!-- loop through the folders and create a button for each one -->
+    {% for folder in folders %}
+        <a href="/show?folder={{folder}}"><button>{{folder}}</button></a>
+    {% endfor %}
+</body>
+</html>

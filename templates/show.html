@@ -1,0 +1,41 @@
+<!-- show.html -->
+<html>
+<head>
+    <title>Media Viewer</title>
+    <style>
+        /* Set a max-width for the media elements */
+        .media {
+            max-width: 640px;
+        }
+
+        /* Use the object-fit property to resize the content of the video and image elements */
+        video, img {
+            object-fit: contain; /* Scale the content to fit the container without cropping or stretching */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>You chose the folder: {{folder}}</h1>
+    <ul>
+        {% for ext, file, datetime, cap in media %}
+        <li>
+            <p>{{ datetime }}</p>
+            {% if ext == 'mp4' %}
+            <video class="media" controls>
+                <source src="{{ url_for('show_file', folder=folder, filename=file) }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            {% elif ext == 'jpg' %}
+            <img class="media" src="{{ url_for('show_file', folder=folder, filename=file) }}" loading="lazy" alt="Image">
+            {% elif ext == 'txt' %}
+            <p class="media">{{ url_for('show_file', folder=folder, filename=file) | read_file }}</p>
+            {% elif ext == 'multi' %}
+            <p class="media">{{ cap }}</p>
+            <img class="media" src="{{ url_for('show_file', folder=folder, filename=file) }}" loading="lazy" alt="Image">
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
